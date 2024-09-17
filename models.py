@@ -39,8 +39,6 @@ class Movie(BaseModel):
             "director": self.director,
         }
 
-    # shows = db.relationship("Show", backref="venue", cascade="all, delete-orphan")
-
 
 class Actor(BaseModel):
     __tablename__ = "Actor"
