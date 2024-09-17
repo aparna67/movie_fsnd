@@ -59,47 +59,47 @@ class MovieTestCase(unittest.TestCase):
         self.assertEqual(data["success"], True)
         self.assertTrue(data["movies"])
 
-    # def test_create_new_movie(self):
-    #     res = self.client.post(
-    #         "/movies", json=self.new_movie, headers=self.headers["Executive Producer"]
-    #     )
-    #     data = json.loads(res.data)
+    def test_create_new_movie(self):
+        res = self.client.post(
+            "/movies", json=self.new_movie, headers=self.headers["Executive Producer"]
+        )
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 200)
 
-    #     self.assertIn("created_id", data)
+        self.assertIn("created_id", data)
 
-    #     self.assertTrue(data["movies"])
-    #     self.assertTrue(data["total_movies"])
+        self.assertTrue(data["movies"])
+        self.assertTrue(data["total_movies"])
 
-    # def test_delete_movie(self):
-    #     with self.app.app_context():
+    def test_delete_movie(self):
+        with self.app.app_context():
 
-    #         res = self.client.delete(
-    #             "/movies/5", headers=self.headers["Executive Producer"]
-    #         )
-    #         data = json.loads(res.data)
+            res = self.client.delete(
+                "/movies/5", headers=self.headers["Executive Producer"]
+            )
+            data = json.loads(res.data)
 
-    #         movie = Movie.query.filter(Movie.id == 5).one_or_none()
+            movie = Movie.query.filter(Movie.id == 5).one_or_none()
 
-    #         self.assertEqual(res.status_code, 200)
-    #         self.assertEqual(data["success"], True)
-    #         self.assertEqual(data["deleted_id"], 5)
-    #         self.assertTrue(data["total_movies"])
-    #         self.assertTrue(len(data["movies"]))
-    #         self.assertEqual(movie, None)
+            self.assertEqual(res.status_code, 200)
+            self.assertEqual(data["success"], True)
+            self.assertEqual(data["deleted_id"], 5)
+            self.assertTrue(data["total_movies"])
+            self.assertTrue(len(data["movies"]))
+            self.assertEqual(movie, None)
 
-    # def test_update_movie(self):
-    #     res = self.client.patch(
-    #         "/movies/1",
-    #         json={"director": "Karan Johar"},
-    #         headers=self.headers["Executive Producer"],
-    #     )
-    #     data = json.loads(res.data)
+    def test_update_movie(self):
+        res = self.client.patch(
+            "/movies/1",
+            json={"director": "Karan Johar"},
+            headers=self.headers["Executive Producer"],
+        )
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertTrue(data["updated_entry"])
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertTrue(data["updated_entry"])
 
     ## Error for endpoints
 
@@ -160,47 +160,47 @@ class MovieTestCase(unittest.TestCase):
         self.assertEqual(data["success"], True)
         self.assertTrue(data["actors"])
 
-    # def test_create_new_actor(self):
-    #     res = self.client.post(
-    #         "/actors", json=self.new_actor, headers=self.headers["Executive Producer"]
-    #     )
-    #     data = json.loads(res.data)
+    def test_create_new_actor(self):
+        res = self.client.post(
+            "/actors", json=self.new_actor, headers=self.headers["Executive Producer"]
+        )
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 200)
 
-    #     self.assertIn("created_id", data)
+        self.assertIn("created_id", data)
 
-    #     self.assertTrue(data["actors"])
-    #     self.assertTrue(data["total_actors"])
+        self.assertTrue(data["actors"])
+        self.assertTrue(data["total_actors"])
 
-    # def test_delete_actor(self):
-    #     with self.app.app_context():
+    def test_delete_actor(self):
+        with self.app.app_context():
 
-    #         res = self.client.delete(
-    #             "/actors/5", headers=self.headers["Executive Producer"]
-    #         )
-    #         data = json.loads(res.data)
+            res = self.client.delete(
+                "/actors/5", headers=self.headers["Executive Producer"]
+            )
+            data = json.loads(res.data)
 
-    #         actor = Actor.query.filter(Actor.id == 5).one_or_none()
+            actor = Actor.query.filter(Actor.id == 5).one_or_none()
 
-    #         self.assertEqual(res.status_code, 200)
-    #         self.assertEqual(data["success"], True)
-    #         self.assertEqual(data["deleted_id"], 5)
-    #         self.assertTrue(data["total_actors"])
-    #         self.assertTrue(len(data["actors"]))
-    #         self.assertEqual(actor, None)
+            self.assertEqual(res.status_code, 200)
+            self.assertEqual(data["success"], True)
+            self.assertEqual(data["deleted_id"], 5)
+            self.assertTrue(data["total_actors"])
+            self.assertTrue(len(data["actors"]))
+            self.assertEqual(actor, None)
 
-    # def test_update_actor(self):
-    #     res = self.client.patch(
-    #         "/actors/1",
-    #         json={"age": 42},
-    #         headers=self.headers["Executive Producer"],
-    #     )
-    #     data = json.loads(res.data)
+    def test_update_actor(self):
+        res = self.client.patch(
+            "/actors/1",
+            json={"age": 42},
+            headers=self.headers["Executive Producer"],
+        )
+        data = json.loads(res.data)
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data["success"], True)
-    #     self.assertTrue(data["updated_entry"])
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["success"], True)
+        self.assertTrue(data["updated_entry"])
 
     ## Error endpoints
 
@@ -228,13 +228,15 @@ class MovieTestCase(unittest.TestCase):
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"], "bad request")
 
-    def test_422_if_actor_does_not_exist(self):
-        res = self.client.delete("/actors/1000")
+    def test_404_if_actor_does_not_exist(self):
+        res = self.client.delete(
+            "/actors/1000", headers=self.headers["Casting Director"]
+        )
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 422)
+        self.assertEqual(res.status_code, 404)
         self.assertEqual(data["success"], False)
-        self.assertEqual(data["message"], "unprocessable")
+        self.assertEqual(data["message"], "resource not found")
 
     def test_401_for_failed_update(self):
         res = self.client.patch(
