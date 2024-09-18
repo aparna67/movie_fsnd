@@ -3,11 +3,8 @@ from flask import request
 from functools import wraps
 from urllib.request import urlopen
 from jose import jwt
+from settings import AUTH0_DOMAIN, ALGORITHMS, API_AUDIENCE
 
-
-AUTH0_DOMAIN = "dev-nkwfpilj6rr8dlrl.us.auth0.com"
-ALGORITHMS = ["RS256"]
-API_AUDIENCE = "movie_ud"
 
 ## AuthError Exception
 """
